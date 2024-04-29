@@ -12,7 +12,7 @@ class Mailer:
         app.config['MAIL_USE_TLS'] = True
         app.config['MAIL_USE_SSL'] = False
         app.config['MAIL_USERNAME'] = 'studentx.capstone@gmail.com'
-        app.config['MAIL_PASSWORD'] = 'suqwsbvrstenfmvw'
+        app.config['MAIL_PASSWORD'] = 'none'
         self.mail = Mail(app)
         self.code = ""
         self.email = 'studentx.capstone@gmail.com'
