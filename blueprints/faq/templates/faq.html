@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>FAQ</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <link rel="apple-touch-icon" href="assets/img/apple-icon.png" />
+  <link rel="shortcut icon" href="{{url_for('static', filename='img/favicon.png')}}">
+
+  <link rel="stylesheet" href="/static/css/bootstrap.min.css" />
+  <link rel="stylesheet" href="/static/css/templatemo.css" />
+  <link rel="stylesheet" href="/static/css/custom.css" />
+  <link rel="stylesheet" href="/static/css/general.css"/>
+
+  <link rel="stylesheet"
+    href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;200;300;400;500;700;900&display=swap" />
+  <link rel="stylesheet" href="/static/css/fontawesome.min.css" />
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+</head>
+
+<body>
+  <!-- Header -->
+  {% if logged_in == True %}
+  <nav class="navbar navbar-expand-lg navbar-light shadow">
+    <div class="container d-flex justify-content-between align-items-center">
+      <a class="navbar-brand text-success logo h1 align-self-center" href="{{url_for('home')}}">
+        <img src="/static/img/vector/colored-isolated.svg" alt="StudentX" style="height: 50px" />
+      </a>
+
+      <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse"
+        data-bs-target="#templatemo_main_nav" aria-controls="navbarSupportedContent" aria-expanded="false"
+        aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="" id="templatemo_main_nav">
+        <div class="navbar align-self-center d-flex">
+          <div class="d-lg-none flex-sm-fill mt-3 mb-4 col-7 col-sm-auto pr-3">
+            <!--<div class="input-group">
+              <input type="text" class="form-control" id="inputMobileSearch" placeholder="Search ..." />
+              <div class="input-group-text">
+                <i class="fa fa-fw fa-search"></i>
+              </div>
+            </div>-->
+          </div>
+          <a class="nav-icon d-none d-lg-inline" href="#" data-bs-toggle="modal" data-bs-target="#templatemo_search" title="search">
+            <i class="fa fa-fw fa-search text-dark mr-2"></i>
+          </a>
+          <ul class="nav navbar-nav d-flex justify-content-between mx-lg-auto">
+            <li class="nav-item">
+                <a class="nav-link" href="{{url_for('chat.chat')}}">Chat</a>
+            </li>
+          </ul>
+          &nbsp;
+          <!--<a class="nav-icon position-relative text-decoration-none" href="{{url_for('chat.chat')}}" title="chat">
+            <i class="fa fa-fw fa-message text-dark mr-3"></i>
+          </a>-->
+          <ul class="nav navbar-nav d-flex justify-content-between mx-lg-auto">
+            <li class="nav-item">
+                <a class="nav-link" href="{{url_for('store.store')}}">Store</a>
+            </li>
+          </ul>
+          &nbsp;
+          <ul class="nav navbar-nav d-flex justify-content-between mx-lg-auto">
+            <li class="nav-item">
+                <a class="nav-link" href="{{url_for('store.myitems')}}">Create Listing</a>
+            </li>
+          </ul>
+          &nbsp;&nbsp;&nbsp;&nbsp;
+          <!--<a class="nav-icon position-relative text-decoration-none" href="{{url_for('store.store')}}" title="store">
+            <i class="fa fa-fw fa-shop text-dark mr-3"></i>
+          </a>-->
+          <a class="nav-icon position-relative text-decoration-none" href="{{url_for('basket.basket')}}" title="cart">
+            <i class="fa fa-fw fa-cart-arrow-down text-dark mr-1"></i>
+            <span
+              class="position-absolute top-0 left-100 translate-middle badge rounded-pill bg-light text-dark" id="cart-number">0</span>
+          </a>
+          &nbsp;&nbsp;
+          <a class="nav-icon position-relative text-decoration-none" href="{{url_for('profile.profile')}}" title="profile">
+            <i class="fa fa-fw fa-user text-dark mr-3"></i>
+            <!-- notifications in the future -->
+            <!-- <span class="position-absolute top-0 left-100 translate-middle badge rounded-pill bg-light text-dark">+1</span> -->
+          </a>
+          <ul class="nav navbar-nav d-flex justify-content-between mx-lg-auto">
+            <li class="nav-item">
+                <a class="nav-link" href="{{url_for('logout')}}">Logout</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+      
+    </div>
+  </nav>
+  {% else %}
+  <nav class="navbar navbar-expand-lg navbar-light shadow">
+    <div class="container d-flex justify-content-between align-items-center">
+
+        <a class="navbar-brand text-success logo h1 align-self-center" href="{{url_for('landing_page')}}">
+            <img src="/static/img/vector/colored-isolated.svg" alt="StudentX" style="height: 50px;">
+        </a>
+
+        <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse"
+            data-bs-target="#templatemo_main_nav" aria-controls="navbarSupportedContent" aria-expanded="false"
+            aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+
+        <div class="navbar align-self-center d-flex">
+            <!--<div class="d-lg-none flex-sm-fill mt-3 mb-4 col-7 col-sm-auto pr-3">
+                <div class="input-group">
+                    <input type="text" class="form-control" id="inputMobileSearch" placeholder="Search ...">
+                    <div class="input-group-text">
+                        <i class="fa fa-fw fa-search"></i>
+                    </div>
+                </div>
+            </div>-->
+            <a class="nav-icon d-none d-lg-inline" href="#" data-bs-toggle="modal" data-bs-target="#templatemo_search">
+              <i class="fa fa-fw fa-search text-dark mr-2"></i>
+            </a>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              <ul class="nav navbar-nav d-flex justify-content-between mx-lg-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="{{url_for('login')}}">Login</a>
+                </li>
+                &nbsp;&nbsp;
+                &nbsp;&nbsp;
+                <li class="nav-item">
+                    <a class="nav-link" href="{{url_for('signup')}}">Signup</a>
+                </li>
+            </ul>
+            
+
+        </div>
+    </div>
+
+    </div>
+</nav>
+  {% endif %}
+  <!-- Close Header -->
+
+  <!-- Modal -->
+  <div class="modal fade bg-white" id="templatemo_search" tabindex="-1" role="dialog"
+    aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+      <div class="w-100 pt-1 mb-5 text-right">
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <form method="POST" id="faq-search-form" action="/faq" class="modal-content modal-body border-0 p-0">
+        <div class="input-group mb-2">
+          <input type="text" class="form-control" id="inputModalSearch" name="title" placeholder="Search ..."
+            maxlength="48" required />
+          <button type="submit" class="input-group-text bg-success text-light">
+            <i class="fa fa-fw fa-search text-white"></i>
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+
+  <!-- Start Content -->
+  <div class="container py-5">
+    <div class="row">
+      <div class="container text-center">
+
+        <h1>Frequently Asked Questions</h1>
+      </div>
+      {% if search_name %}
+      <div class="searched_for">Searched: <span>{{search_name}}</span></div>
+      {% endif %}
+      {% if correct_name %}
+      <div class="corrected_for">Did you mean: <span onclick="submitSearchForm(this)">{{correct_name}}</span></div>
+      {% endif %}
+      <div class="accordion accordion-flush" id="accordionParent">
+
+        {% for item in items %}
+
+        <div class="accordion-item">
+          <h2 class="accordion-header" id="flush-heading{{loop.index}}">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+              data-bs-target="#flush-collapse{{loop.index}}" aria-expanded="false"
+              aria-controls="flush-collapse{{loop.index}}">
+              {{item[0]}}
+            </button>
+          </h2>
+          <div id="flush-collapse{{loop.index}}" class="accordion-collapse collapse"
+            aria-labelledby="flush-heading{{loop.index}}" data-bs-parent="#accordionParent">
+            <div class="accordion-body">{{item[1]}}
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+  <!-- End Content -->
+
+  <footer class="bg-dark" id="tempaltemo_footer">
+    <div class="container">
+      <div class="row">
+
+        <div class="col-md-4 pt-5">
+          <h2 class="h2 text-success border-bottom pb-3 border-light logo">StudentX</h2>
+          <ul class="list-unstyled text-light footer-link-list">
+            <li>
+              <i class="fas fa-map-marker-alt fa-fw"></i>
+              5 Seminary Place, New Brunswick, 08901, NJ
+            </li>
+
+            <li>
+              <i class="fa fa-envelope fa-fw"></i>
+              <a class="text-decoration-none" href="mailto:info@company.com">studentx.capstone@gmail.com</a>
+            </li>
+          </ul>
+        </div>
+
+        <div class="col-md-4 pt-5">
+          <h2 class="h2 text-light border-bottom pb-3 border-light">Categories</h2>
+          <form id="category-footer-form" action="/store" method="POST">
+            <input style="display: none;" type="text" name="category" id="sup-data" value="">
+            {% if logged_in == True %}
+                      <ul class="list-unstyled text-light footer-link-list">
+                        <li><div class="text-decoration-none form" onclick="submitForm('')">All</div></li>
+                        <li><div class="text-decoration-none form" onclick="submitForm('tech')">Tech</div></li>
+                        <li><div class="text-decoration-none form" onclick="submitForm('clothing')">Clothing</div></li>
+                        <li><div class="text-decoration-none form" onclick="submitForm('books')">Books</div></li>
+                        <li><div class="text-decoration-none form" onclick="submitForm('home_decor')">Home Decor</div></li>
+                        <li><div class="text-decoration-none form" onclick="submitForm('lighting')">Lighting</div></li>
+                        <li><div class="text-decoration-none form" onclick="submitForm('furniture')">Furniture</div></li>
+                        <li><div class="text-decoration-none form" onclick="submitForm('appliances')">Appliances</div></li>
+                        <li><div class="text-decoration-none form" onclick="submitForm('housing')">Housing</div></li>
+                        <li><div class="text-decoration-none form" onclick="submitForm('parking')">Parking</div></li>
+                        <li><div class="text-decoration-none form" onclick="submitForm('other')">Other</div></li>
+                    </ul>
+                      {% else %}
+                      <ul class="list-unstyled text-light footer-link-list">
+                        <li><a class="text-decoration-none" href="./login/dqG724PJ5fCY1Mxx76qpwBROKV6aJe6F">All</a></li>
+                        <li><a class="text-decoration-none" href="./login/IvGnmty8jPJPCdNfeC57zws8H8Kux8bg">Tech</a></li>
+                        <li><a class="text-decoration-none" href="./login/60AGPxFnDcubmVx5IWmHLnHPHs5ZNdZ5">Clothing</a></li>
+                        <li><a class="text-decoration-none" href="./login/EBwT0PYwSZKJ9r0tRg5dE4JkVtM1q7aQ">Books</a></li>
+                        <li><a class="text-decoration-none" href="./login/JBCL1SUiDaXvMixtZOfxcbX1msiJqabd">Home Decor</a></li>
+                        <li><a class="text-decoration-none" href="./login/OH4dWiQn8ncwTMbF1a4gfQpmeQWxHTBn">Lighting</a></li>
+                        <li><a class="text-decoration-none" href="./login/vzUNih7yy0NdQRFUQcYzbeOVGniC44Mt">Furniture</a></li>
+                        <li><a class="text-decoration-none" href="./login/IobKzcGhv7sdTXvNew5wEsVvIC7UHMMa">Appliances</a></li>
+                        <li><a class="text-decoration-none" href="./login/SRTBLs3mLzGW1W6XI3aZuvrfuXYgzohk">Housing</a></li>
+                        <li><a class="text-decoration-none" href="./login/gzcjrLzbPP4u8UDSyD9iJ9uNKvWOugYi">Parking</a></li>
+                        <li><a class="text-decoration-none" href="./login/nGBQoPKqLgDMlcxEAmUgWPOURXb3u0Xr">Other</a></li>
+                    </ul>
+                      {% endif %}
+          </form>
+      </div>
+
+      <div class="col-md-4 pt-5">
+          <h2 class="h2 text-light border-bottom pb-3 border-light">Further Info</h2>
+          <ul class="list-unstyled text-light footer-link-list">
+              <li><a class="text-decoration-none" href="{{url_for('home')}}">Home</a></li>
+              <li><a class="text-decoration-none" href="{{url_for('about')}}">About Us</a></li>
+              <li><a class="text-decoration-none" href="{{url_for('faq.faq')}}">FAQs</a></li>
+              <li><a class="text-decoration-none" href="{{url_for('contact_us.contact')}}">Contact Us</a></li>
+          </ul>
+      </div>
+
+      </div>
+
+      <div class="row text-light">
+        <div class="col-12 mb-3">
+          <div class="w-100 my-3 border-top border-light"></div>
+        </div>
+        <div class="col-auto me-auto">
+          <ul class="list-inline text-left footer-icons">
+            <li class="list-inline-item border border-light rounded-circle text-center">
+              <a class="text-light text-decoration-none" target="_blank" href="http://facebook.com/"><i
+                  class="fab fa-facebook-f fa-lg fa-fw"></i></a>
+            </li>
+            <li class="list-inline-item border border-light rounded-circle text-center">
+              <a class="text-light text-decoration-none" target="_blank" href="https://www.instagram.com/"><i
+                  class="fab fa-instagram fa-lg fa-fw"></i></a>
+            </li>
+            <li class="list-inline-item border border-light rounded-circle text-center">
+              <a class="text-light text-decoration-none" target="_blank" href="https://twitter.com/"><i
+                  class="fab fa-twitter fa-lg fa-fw"></i></a>
+            </li>
+            <li class="list-inline-item border border-light rounded-circle text-center">
+              <a class="text-light text-decoration-none" target="_blank" href="https://www.linkedin.com/"><i
+                  class="fab fa-linkedin fa-lg fa-fw"></i></a>
+            </li>
+          </ul>
+        </div>
+        <div class="col-auto">
+          <label class="sr-only" for="subscribeEmail">Email address</label>
+          <div class="input-group mb-2">
+            <input type="email" class="form-control bg-dark border-light" id="subscribeEmail"
+              placeholder="Email address">
+            <div class="input-group-text btn-success text-light" id="subscribe-btn">Subscribe</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </footer>
+
+
+  <script src="/static/js/jquery-1.11.0.min.js"></script>
+  <script src="/static/js/jquery-migrate-1.2.1.min.js"></script>
+  <script src="/static/js/bootstrap.bundle.min.js"></script>
+  <script src="/static/js/templatemo.js"></script>
+  <script src="/static/js/custom.js"></script>
+  <script src="/static/js/shop.js"></script>
+  <script src="/static/js/basket.js"></script>
+  <script src="/static/js/index.js"></script>
+  <script src="/static/js/faq.js"></script>
+  <!-- End Script -->
+</body>
+
+</html>

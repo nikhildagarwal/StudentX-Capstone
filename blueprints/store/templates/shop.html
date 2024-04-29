@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>Store</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <link rel="apple-touch-icon" href="assets/img/apple-icon.png" />
+  <link rel="stylesheet" href="/static/css/general.css">
+  <link rel="shortcut icon" href="{{url_for('static', filename='img/favicon.png')}}">
+
+  <link rel="stylesheet" href="/static/css/bootstrap.min.css" />
+  <link rel="stylesheet" href="/static/css/templatemo.css" />
+  <link rel="stylesheet" href="/static/css/custom.css" />
+
+  <link rel="stylesheet"
+    href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;200;300;400;500;700;900&display=swap" />
+  <link rel="stylesheet" href="/static/css/fontawesome.min.css" />
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+</head>
+
+<body>
+  <!-- Header -->
+  <nav class="navbar navbar-expand-lg navbar-light shadow">
+    <div class="container d-flex justify-content-between align-items-center">
+      <a class="navbar-brand text-success logo h1 align-self-center" href="{{url_for('home')}}">
+        <img src="/static/img/vector/colored-isolated.svg" alt="StudentX" style="height: 50px" />
+      </a>
+
+      <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse"
+        data-bs-target="#templatemo_main_nav" aria-controls="navbarSupportedContent" aria-expanded="false"
+        aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="" id="templatemo_main_nav">
+        <div class="navbar align-self-center d-flex">
+          <div class="d-lg-none flex-sm-fill mt-3 mb-4 col-7 col-sm-auto pr-3">
+            <!--<div class="input-group">
+              <input type="text" class="form-control" id="inputMobileSearch" placeholder="Search ..." />
+              <div class="input-group-text">
+                <i class="fa fa-fw fa-search"></i>
+              </div>
+            </div>-->
+          </div>
+          <a class="nav-icon d-none d-lg-inline" href="#" data-bs-toggle="modal" data-bs-target="#templatemo_search">
+            <i class="fa fa-fw fa-search text-dark mr-2"></i>
+          </a>
+          <ul class="nav navbar-nav d-flex justify-content-between mx-lg-auto">
+            <li class="nav-item">
+                <a class="nav-link" href="{{url_for('chat.chat')}}">Chat</a>
+            </li>
+          </ul>
+          &nbsp;
+          <!--<a class="nav-icon position-relative text-decoration-none" href="{{url_for('chat.chat')}}" title="chat">
+            <i class="fa fa-fw fa-message text-dark mr-3"></i>
+          </a>-->
+          <ul class="nav navbar-nav d-flex justify-content-between mx-lg-auto">
+            <li class="nav-item">
+                <a class="nav-link" href="{{url_for('store.store')}}">Store</a>
+            </li>
+          </ul>
+          &nbsp;
+          <ul class="nav navbar-nav d-flex justify-content-between mx-lg-auto">
+            <li class="nav-item">
+                <a class="nav-link" href="{{url_for('store.myitems')}}">Create Listing</a>
+            </li>
+          </ul>
+          &nbsp;&nbsp;&nbsp;&nbsp;
+          <!--<a class="nav-icon position-relative text-decoration-none" href="{{url_for('store.store')}}" title="store">
+            <i class="fa fa-fw fa-shop text-dark mr-3"></i>
+          </a>-->
+          <a class="nav-icon position-relative text-decoration-none" href="{{url_for('basket.basket')}}" title="cart">
+            <i class="fa fa-fw fa-cart-arrow-down text-dark mr-1"></i>
+            <span
+              class="position-absolute top-0 left-100 translate-middle badge rounded-pill bg-light text-dark" id="cart-number">0</span>
+          </a>
+          &nbsp;&nbsp;
+          <a class="nav-icon position-relative text-decoration-none" href="{{url_for('profile.profile')}}">
+            <i class="fa fa-fw fa-user text-dark mr-3"></i>
+            <!-- notifications in the future -->
+            <!-- <span class="position-absolute top-0 left-100 translate-middle badge rounded-pill bg-light text-dark">+1</span> -->
+          </a>
+          <ul class="nav navbar-nav d-flex justify-content-between mx-lg-auto">
+            <li class="nav-item">
+                <a class="nav-link" href="{{url_for('logout')}}">Logout</a>
+            </li>
+        </ul>
+        </div>
+      </div>
+      
+    </div>
+  </nav>
+  <!-- Close Header -->
+
+  <!-- Modal -->
+  <div class="modal fade bg-white" id="templatemo_search" tabindex="-1" role="dialog"
+    aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+      <div class="w-100 pt-1 mb-5 text-right">
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <form method="POST" action="/store" id="shop-search-form" class="modal-content modal-body border-0 p-0">
+        <div class="input-group mb-2">
+          <input type="text" class="form-control" id="inputModalSearch" name="title" placeholder="Search ..."
+            maxlength="48" required />
+          <button type="submit" class="input-group-text bg-success text-light">
+            <i class="fa fa-fw fa-search text-white"></i>
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Start Content -->
+  <div class="container py-5">
+    <div class="row">
+      <div class="col-lg-3">
+        <h1 class="h2 pb-4" id="listing-title">Listings</h1>
+        <ul class="list-unstyled templatemo-accordion">
+          <li class="pb-3">
+            Filter By:<br><br>
+            <a class="collapsed d-flex justify-content-between h3 text-decoration-none" href="#">
+              Categories
+              <i class="pull-right fa fa-fw fa-chevron-circle-down mt-1"></i>
+            </a>
+            <ul id="collapseThree" class="collapse list-unstyled pl-3">
+              <form method="POST" action="/store">
+                <div>
+                  <li>
+                    <button type="submit" class="no-decor-btn" name="category" value="" id="all-btn">
+                      All
+                    </button>
+                  </li>
+                  <li>
+                    <button type="submit" class="no-decor-btn" name="category" value="tech" id="tech-btn">
+                      Tech
+                    </button>
+                  </li>
+                  <li>
+                    <button type="submit" class="no-decor-btn" name="category" value="clothing" id="clothing-btn">
+                      Clothing
+                    </button>
+                  </li>
+                  <li>
+                    <button type="submit" class="no-decor-btn" name="category" value="books" id="books-btn">
+                      Books
+                    </button>
+                  </li>
+                  <li>
+                    <button type="submit" class="no-decor-btn" name="category" value="home_decor" id="home_decor-btn">
+                      Home Decor
+                    </button>
+                  </li>
+                  <li>
+                    <button type="submit" class="no-decor-btn" name="category" value="lighting" id="lighting-btn">
+                      Lighting
+                    </button>
+                  </li>
+                  <li>
+                    <button type="submit" class="no-decor-btn" name="category" value="furniture" id="furniture-btn">
+                      Furniture
+                    </button>
+                  </li>
+                  <li>
+                    <button type="submit" class="no-decor-btn" name="category" value="appliances" id="appliances-btn">
+                      Appliances
+                    </button>
+                  </li>
+                  <li>
+                    <button type="submit" class="no-decor-btn" name="category" value="housing" id="housing-btn">
+                      Housing
+                    </button>
+                  </li>
+                  <li>
+                    <button type="submit" class="no-decor-btn" name="category" value="parking" id="parking-btn">
+                      Parking
+                    </button>
+                  </li>
+                  <li>
+                    <button type="submit" class="no-decor-btn" name="category" value="other" id="other-btn">
+                      Other
+                    </button>
+                  </li>
+                </div>
+              </form>
+            </ul>
+            <a class="collapsed d-flex justify-content-between h3 text-decoration-none" href="#">
+              Lists
+              <i class="pull-right fa fa-fw fa-chevron-circle-down mt-1"></i>
+            </a>
+            <ul id="collapseThree" class="collapse list-unstyled pl-3">
+              <form method="POST" action="/store">
+                <div>
+                  <li>
+                    <button type="submit" class="no-decor-btn" name="category" value="" id="all-btn">
+                      All
+                    </button>
+                  </li>
+                  <li>
+                    <button type="submit" class="no-decor-btn" name="category" value="rec" id="clothing-btn">
+                      Recommended
+                    </button>
+                  </li>
+                  <li>
+                    <button type="submit" class="no-decor-btn" name="category" value="fav" id="tech-btn">
+                      Favourites
+                    </button>
+                  </li>
+                  <li>
+                    <button type="submit" class="no-decor-btn" name="category" value="cart" id="clothing-btn">
+                      Cart
+                    </button>
+                  </li>
+                </div>
+              </form>
+            </ul>
+          </li>
+        </ul>
+        <div class="pb-3">
+          <!--DISABLED FOR BUG FIX-->
+          <h2 class="h5">Price</h2>
+          <form method="POST" action="/store">
+            <input type="number" class="form-control" name="minPrice" placeholder="Min Price" />
+            <br>
+            <input type="number" class="form-control" name="maxPrice" placeholder="Max Price" />
+
+            <button type="submit" class="btn btn-success btn-sm" style="margin-top: 10px;">
+              Filter
+            </button>
+          </form>
+        </div>
+      </div>
+
+      <div class="col-lg-9">
+        <div class="row">
+          <div class="col-md-6 pb-4">
+            Sort By:
+            <div class="d-flex">
+              <form id="shop-sort-form" action="/store" method="POST">
+                <input style="display: none;" type="text" id="sort-input" name="sort" required>
+              </form>
+              <select class="form-control" id="filter-selection" onclick="triggerFilter()">
+                {% for value, label in sort_options %}
+                  {% if value == selected %}
+                    <option value="{{value}}" selected>{{label}}</option>
+                  {% else %}
+                    <option value="{{value}}">{{label}}</option>
+                  {% endif %}
+                {% endfor %}
+              </select>
+            </div>
+          </div>
+        </div>
+        {% if search_name %}
+        <div class="searched_for">Searched: <span>{{search_name}}</span></div>
+        {% endif %}
+        {% if correct_name %}
+        <div class="corrected_for">Did you mean: <span onclick="submitSearchForm(this)">{{correct_name}}</span></div>
+        {% endif %}
+        <div class="row" id="item-area">
+          {% if len(items) == 0 and len(sorted_items) == 0%}
+            <img style="transform: scale(0.5); margin-top: -15%; margin-bottom: -15%;" src="/static/img/no_items_found.png">
+          {% endif %}
+          {% for item_id, item in items %}
+          <div class="col-md-4" data-price-dollars="{{item.dollars}}" data-price-cents="{{item.cents}}"
+            data-seller-id="{{item.seller_id}}" data-item-id="{{item_id}}" data-title="{{item.title}}"
+            data-timestamp="{{item.updated_at}}" data-impressions="{{item.impressions}}"
+            data-category="{{item.category}}" data-price="{{item.dollars}}.{{item.cents}}">
+            <div class="card mb-4 product-wap rounded-0">
+              <div class="card rounded-0">
+                <img class="card-img rounded-0 img-fluid" src="{{item.image_url}}"
+                  style="max-height: 300px; min-height: 300px; overflow: hidden; object-fit: contain;"
+                  alt="Product Image" />
+                <div
+                  class="card-img-overlay rounded-0 product-overlay d-flex align-items-center justify-content-center">
+                  <ul class="list-unstyled">
+                    <li id="{{item_id}}-heart-btn-holder">
+                      {% if item_id not in fav %}
+                        <div class="btn btn-success text-white" onclick="addToFav(this)"
+                          data-category="{{item.category}}" data-id="{{item_id}}"><i class="far fa-heart"></i></div>
+                      {% else %}
+                        <div class="btn btn-success text-white" onclick="removeFromFav(this)"
+                          data-category="{{item.category}}" data-id="{{item_id}}"><i class="fas fa-heart"></i></div>
+                      {% endif %}
+                    </li>
+                    <!--<li>
+                        <a class="btn btn-success text-white mt-2" href="#"><i class="far fa-eye"></i></a>
+                      </li>-->
+                    <li>
+                      {% if item_id not in cart %}
+                      <div class="btn btn-success text-white mt-2" onclick="addToCart(this)"
+                        data-category="{{item.category}}" data-id="{{item_id}}"><i class="fas fa-cart-plus"></i></div>
+                      {% else %}
+                      <div class="btn btn-success text-white mt-2"
+                        data-category="{{item.category}}" data-id="{{item_id}}"><i class="fas fa-check"></i></div>
+                      {% endif %}
+                    </li>
+                  </ul>
+                </div>
+              </div>
+              <div class="card-body">
+                <a href="{{url_for('item.item', category=item.category, item_id=item_id)}}"
+                  class="h3 text-decoration-none">{{item.title}}</a>
+                <ul class="w-100 list-unstyled d-flex justify-content-between mb-0">
+                  <li>{{item.category}}</li>
+                  <li class="pt-2">
+                    <span class="product-color-dot color-dot-red float-left rounded-circle ml-1"></span>
+                    <span class="product-color-dot color-dot-blue float-left rounded-circle ml-1"></span>
+                    <span class="product-color-dot color-dot-black float-left rounded-circle ml-1"></span>
+                    <span class="product-color-dot color-dot-light float-left rounded-circle ml-1"></span>
+                    <span class="product-color-dot color-dot-green float-left rounded-circle ml-1"></span>
+                  </li>
+                </ul>
+                <ul class="list-unstyled d-flex justify-content-center mb-1"
+                  style="display: flex; justify-content: center; align-items: center;">
+                  <!--<li>
+                    Seller
+                    <i class="text-warning fa fa-star"></i>
+                    <i class="text-warning fa fa-star"></i>
+                    <i class="text-warning fa fa-star"></i>
+                    <i class="text-warning fa fa-star"></i>
+                    <i class="text-warning fa fa-star"></i>
+                  </li>-->
+                </ul>
+                {% if len(str(item.cents)) == 1 %}
+                <p class="text-center mb-0">${{item.dollars}}.{{item.cents}}0</p>
+                {% else %}
+                  <p class="text-center mb-0">${{item.dollars}}.{{item.cents}}</p>
+                {% endif %} 
+                
+              </div>
+            </div>
+          </div>
+          {% endfor %}
+          {% for item_id, item in sorted_items %}
+          <div class="col-md-4" data-price-dollars="{{item.dollars}}" data-price-cents="{{item.cents}}"
+            data-seller-id="{{item.seller_id}}" data-item-id="{{item_id}}" data-title="{{item.title}}"
+            data-timestamp="{{item.updated_at}}" data-impressions="{{item.impressions}}"
+            data-category="{{item.category}}" data-price="{{item.dollars}}.{{item.cents}}">
+            <div class="card mb-4 product-wap rounded-0">
+              <div class="card rounded-0">
+                <img class="card-img rounded-0 img-fluid" src="{{item.image_url}}"
+                  style="max-height: 300px; min-height: 300px; overflow: hidden; object-fit: contain;"
+                  alt="Product Image" />
+                <div
+                  class="card-img-overlay rounded-0 product-overlay d-flex align-items-center justify-content-center">
+                  <ul class="list-unstyled">
+                    <li id="{{item_id}}-heart-btn-holder">
+                      {% if item_id not in fav %}
+                        <div class="btn btn-success text-white" onclick="addToFav(this)"
+                          data-category="{{item.category}}" data-id="{{item_id}}"><i class="far fa-heart"></i></div>
+                      {% else %}
+                        <div class="btn btn-success text-white" onclick="removeFromFav(this)"
+                          data-category="{{item.category}}" data-id="{{item_id}}"><i class="fas fa-heart"></i></div>
+                      {% endif %}
+                      
+                    </li>
+                    <!--<li>
+                        <a class="btn btn-success text-white mt-2" href="#"><i class="far fa-eye"></i></a>
+                      </li>-->
+                    <li>
+                      {% if item_id not in cart %}
+                      <div class="btn btn-success text-white mt-2" onclick="addToCart(this)"
+                        data-category="{{item.category}}" data-id="{{item_id}}"><i class="fas fa-cart-plus"></i></div>
+                      {% else %}
+                      <div class="btn btn-success text-white mt-2"
+                        data-category="{{item.category}}" data-id="{{item_id}}"><i class="fas fa-check"></i></div>
+                      {% endif %}
+                    </li>
+                  </ul>
+                </div>
+              </div>
+              <div class="card-body">
+                <a href="{{url_for('item.item', category=item.category, item_id=item_id)}}"
+                  class="h3 text-decoration-none">{{item.title}}</a>
+                <ul class="w-100 list-unstyled d-flex justify-content-between mb-0">
+                  <li>{{item.category}}</li>
+                  <li class="pt-2">
+                    <span class="product-color-dot color-dot-red float-left rounded-circle ml-1"></span>
+                    <span class="product-color-dot color-dot-blue float-left rounded-circle ml-1"></span>
+                    <span class="product-color-dot color-dot-black float-left rounded-circle ml-1"></span>
+                    <span class="product-color-dot color-dot-light float-left rounded-circle ml-1"></span>
+                    <span class="product-color-dot color-dot-green float-left rounded-circle ml-1"></span>
+                  </li>
+                </ul>
+                <ul class="list-unstyled d-flex justify-content-center mb-1"
+                  style="display: flex; justify-content: center; align-items: center;">
+                  <!--<li>
+                    Seller
+                    <i class="text-warning fa fa-star"></i>
+                    <i class="text-warning fa fa-star"></i>
+                    <i class="text-warning fa fa-star"></i>
+                    <i class="text-warning fa fa-star"></i>
+                    <i class="text-warning fa fa-star"></i>
+                  </li>-->
+                </ul>
+                <p class="text-center mb-0">${{item.dollars}}.{{item.cents}}</p>
+              </div>
+            </div>
+          </div>
+          {% endfor %}
+          
+        </div>
+        <!--ADD PAGE NUMBERS START-->
+        <form action="/store" method="POST" id="page_form" data-current-page="{{curr_page}}">
+          <input style="display: none;" type="number" name="page" id="page_number_input" required>
+          <nav aria-label="page navigation">
+            <ul class="pagination justify-content-center" style="display: flex; overflow-x: auto; width: 50%; margin-left: 25%;">
+              {% for page in num_pages %}
+                {% if loop.index == curr_page %}
+                  <li class="page-item active"><div class="page-link" onclick="topage(this)" style="cursor: pointer;">{{loop.index}}</div></li>
+                {% else %}
+                  <li class="page-item"><div class="page-link" onclick="topage(this)" style="cursor: pointer;">{{loop.index}}</div></li>
+                {% endif %}
+              {% endfor %}
+            </ul>
+          </nav>
+        </form>
+        <!--ADD PAGE NUMBERS END-->
+      </div>
+    </div>
+  </div>
+  <!-- End Content -->
+  <!-- begin footer -->
+  <footer class="bg-dark" id="tempaltemo_footer">
+    <div class="container">
+      <div class="row">
+
+        <div class="col-md-4 pt-5">
+          <h2 class="h2 text-success border-bottom pb-3 border-light logo">StudentX</h2>
+          <ul class="list-unstyled text-light footer-link-list">
+            <li>
+              <i class="fas fa-map-marker-alt fa-fw"></i>
+              5 Seminary Place, New Brunswick, 08901, NJ
+            </li>
+
+            <li>
+              <i class="fa fa-envelope fa-fw"></i>
+              <a class="text-decoration-none" href="mailto:studentx.capstone@gmail.com">studentx.capstone@gmail.com</a>
+            </li>
+          </ul>
+        </div>
+
+        <div class="col-md-4 pt-5">
+          <h2 class="h2 text-light border-bottom pb-3 border-light">Categories</h2>
+          <form id="category-footer-form" action="/store" method="POST">
+            <input style="display: none;" type="text" name="category" id="sup-data" value="">
+            <ul class="list-unstyled text-light footer-link-list">
+              <li><div class="text-decoration-none form" onclick="submitForm('')">All</div></li>
+                  <li><div class="text-decoration-none form" onclick="submitForm('tech')">Tech</div></li>
+                  <li><div class="text-decoration-none form" onclick="submitForm('clothing')">Clothing</div></li>
+                  <li><div class="text-decoration-none form" onclick="submitForm('books')">Books</div></li>
+                  <li><div class="text-decoration-none form" onclick="submitForm('home_decor')">Home Decor</div></li>
+                  <li><div class="text-decoration-none form" onclick="submitForm('lighting')">Lighting</div></li>
+                  <li><div class="text-decoration-none form" onclick="submitForm('furniture')">Furniture</div></li>
+                  <li><div class="text-decoration-none form" onclick="submitForm('appliances')">Appliances</div></li>
+                  <li><div class="text-decoration-none form" onclick="submitForm('housing')">Housing</div></li>
+                  <li><div class="text-decoration-none form" onclick="submitForm('parking')">Parking</div></li>
+                  <li><div class="text-decoration-none form" onclick="submitForm('other')">Other</div></li>
+          </ul>
+          </form>
+      </div>
+
+      <div class="col-md-4 pt-5">
+          <h2 class="h2 text-light border-bottom pb-3 border-light">Further Info</h2>
+          <ul class="list-unstyled text-light footer-link-list">
+              <li><a class="text-decoration-none" href="{{url_for('home')}}">Home</a></li>
+              <li><a class="text-decoration-none" href="{{url_for('about')}}">About Us</a></li>
+              <li><a class="text-decoration-none" href="{{url_for('faq.faq')}}">FAQs</a></li>
+              <li><a class="text-decoration-none" href="{{url_for('contact_us.contact')}}">Contact Us</a></li>
+          </ul>
+      </div>
+
+      </div>
+
+      <div class="row text-light">
+        <div class="col-12 mb-3">
+          <div class="w-100 my-3 border-top border-light"></div>
+        </div>
+        <div class="col-auto me-auto">
+          <ul class="list-inline text-left footer-icons">
+            <li class="list-inline-item border border-light rounded-circle text-center">
+              <a class="text-light text-decoration-none" target="_blank" href="http://facebook.com/"><i
+                  class="fab fa-facebook-f fa-lg fa-fw"></i></a>
+            </li>
+            <li class="list-inline-item border border-light rounded-circle text-center">
+              <a class="text-light text-decoration-none" target="_blank" href="https://www.instagram.com/"><i
+                  class="fab fa-instagram fa-lg fa-fw"></i></a>
+            </li>
+            <li class="list-inline-item border border-light rounded-circle text-center">
+              <a class="text-light text-decoration-none" target="_blank" href="https://twitter.com/"><i
+                  class="fab fa-twitter fa-lg fa-fw"></i></a>
+            </li>
+            <li class="list-inline-item border border-light rounded-circle text-center">
+              <a class="text-light text-decoration-none" target="_blank" href="https://www.linkedin.com/"><i
+                  class="fab fa-linkedin fa-lg fa-fw"></i></a>
+            </li>
+          </ul>
+        </div>
+        <div class="col-auto">
+          <label class="sr-only" for="subscribeEmail">Email address</label>
+          <div class="input-group mb-2">
+            <input type="email" class="form-control bg-dark border-light" id="subscribeEmail"
+              placeholder="Email address">
+            <div class="input-group-text btn-success text-light" id="subscribe-btn">Subscribe</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </footer>
+
+  <!-- end footer -->
+  <div class="loading-screen-active" id="loading-screen">
+    <img id="loading_image" src="/static/img/colorful_loading.gif" alt="A beautiful image">
+  </div>
+  <script src="/static/js/jquery-1.11.0.min.js"></script>
+  <script src="/static/js/jquery-migrate-1.2.1.min.js"></script>
+  <script src="/static/js/bootstrap.bundle.min.js"></script>
+  <script src="/static/js/templatemo.js"></script>
+  <script src="/static/js/custom.js"></script>
+  <script src="/static/js/shop.js"></script>
+  <script src="/static/js/basket.js"></script>
+  <script src="/static/js/index.js"></script>
+  <!-- End Script -->
+</body>
+
+</html>

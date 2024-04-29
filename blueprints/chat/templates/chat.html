@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+<meta charset="UTF-8">
+    <title>Direct Messaging</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="/static/css/chat.css">
+    <link rel="stylesheet" href="/static/css/general.css">
+    <link rel="shortcut icon" href="{{url_for('static', filename='img/favicon.png')}}">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js"
+            integrity="sha512-q/dWJ3kcmjBLU4Qc47E4A9kTB4m3wuTY7vkFJDTZKjTs8jhyGQnaUrxa0Ytd0ssMZhbNua9hE+E7Qv1j+DyZwA=="
+            crossorigin="anonymous"
+    ></script>
+</head>
+
+<body>
+    <div class="sidebar" id="sidebar" style="width: 15%;">
+        <img src="/static/img/default.png" style="margin-left: 25%; max-width: 50%; margin-right: 25%; border-radius: 50%;">
+        <br>
+        <br>
+        <a href="/home">Home</a>
+        <a href="/store">Store</a>
+        <a href="/items">Create Listing</a>
+        <a href="/cart">Cart</a>
+        <a href="/profile">Profile</a><br><br>
+        <a href="/faq">FAQs</a>
+        <a href="/contact">Contact Us</a>
+        <a href="/about">About Us</a><br><br>
+        <a href="/logout">Logout</a>
+        <br><br>
+    </div>
+    
+    <!--<div class="hamburger-menu" onclick="toggleSidebar()">
+        <i class="fa fa-bars"></i>
+    </div>-->
+    {% if no_chats %}
+        <div class="no-messages-available" id="nma">
+            <img id="start-convo" src="/static/img/no_chats.png" alt="No chat available">
+            <div class="smaller-text">Message a seller to start a conversation!</div>
+        </div>
+    {% else %}
+    
+    <div class="main-container" style="width: 75%; margin-left: 20%; margin-right: 5%;">
+        <div class="chat-list" id="chat_list">
+            <h3><i class="fa-regular fa-message" id="header-icon"></i> Chats</h3>
+        </div>
+        <div class="settings-list" id="settings-list">
+            <div id="setting-header">
+                <i class="fa-solid fa-caret-right" id="settings"></i>
+                
+                <i class="fa-solid fa-gear off" id="header-icon-setting"></i>
+            </div>
+            
+            <div class="setting-item-off" id="time-item">
+                <i class="fa-regular fa-square-check" id="time-setting-check"></i>
+                <i class="fa-solid fa-hourglass-start" id="time-setting"></i>
+                <span>Timestamps</span>
+            </div>
+    
+            <div class="setting-item-off" id="lock-item">
+                <i class="fa-regular fa-square-check" id="lock-setting-check"></i>
+                <i class="fa-solid fa-lock" id="lock-setting"></i>
+                <span>Hide</span>
+            </div>
+        </div>
+        <div class="rhs" id="rhs">
+            <div class="head-none" id="message-header">
+            </div>
+            <div class="message-area-none" id="message-view-area">
+                <div class="no-messages-available" id="nma">
+                    <img id="start-convo" src="../static/img/start_convo.jpg" alt="No chat selected">
+                    <div class="smaller-text">Start a conversation</div>
+                </div>
+                <div class="display-none" id="message-box">
+                    <div class="item-center">
+                        Hi hello
+                    </div>
+                </div>
+            </div>
+            <div class="no-chat-selected" id="ncs">
+                <img id="chat-bubble" src="../static/img/chat_bubble.png" alt="No chat selected">
+            </div>
+            <div class="no-chat-selected-text" id="ncst">
+                <h3>You have messages</h3>
+            </div>
+            <div class="no-chat-selected-smaller-text" id="ncsst">
+                Select a conversation to read
+            </div>
+            <div class="message-input-container-none" id="message-input-area">
+                <input type="text" class="message-input" id="message-input" placeholder="Write your message">
+                <button class="send-button" id="send-btn">Send</button>
+            </div>
+        </div>
+    </div>
+    <div class="loading-screen-active" id="loading-screen">
+        <img id="loading_image" src="/static/img/colorful_loading.gif" alt="A beautiful image">
+    </div>
+    
+    {% endif %}
+
+
+    <script src="/static/js/chat.js"></script>
+</body>
+
+
+
+
+
+</html>
+

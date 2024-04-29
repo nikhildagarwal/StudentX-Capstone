@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Routing...</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="apple-touch-icon" href="/static/img/apple-icon.png">
+    <!--<link rel="shortcut icon" type="image/x-icon" href="assets/img/favicon.ico">-->
+    <link rel="shortcut icon" href="{{url_for('static', filename='img/favicon.png')}}">
+
+    <link rel="stylesheet" href="/static/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/static/css/templatemo.css">
+    <link rel="stylesheet" href="/static/css/custom.css">
+    <link rel="stylesheet" href="/static/css/general.css">
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;200;300;400;500;700;900&display=swap">
+    <link rel="stylesheet" href="/static/css/fontawesome.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+</head>
+
+<body>
+    {% if routing_key == to_all %}
+    <form action="/store" method="POST" id="route-form">
+        <input style="display: none;" type="text" name="category" value="">
+    </form>
+    {% elif routing_key == to_tech %}
+    <form action="/store" method="POST" id="route-form">
+        <input style="display: none;" type="text" name="category" value="tech">
+    </form>
+    {% elif routing_key == to_clothing %}
+    <form action="/store" method="POST" id="route-form">
+        <input style="display: none;" type="text" name="category" value="clothing">
+    </form>
+    {% elif routing_key == to_books %}
+    <form action="/store" method="POST" id="route-form">
+        <input style="display: none;" type="text" name="category" value="books">
+    </form>
+    {% elif routing_key == to_home_decor %}
+    <form action="/store" method="POST" id="route-form">
+        <input style="display: none;" type="text" name="category" value="home_decor">
+    </form>
+    {% elif routing_key == to_lighting %}
+    <form action="/store" method="POST" id="route-form">
+        <input style="display: none;" type="text" name="category" value="lighting">
+    </form>
+    {% elif routing_key == to_furniture %}
+    <form action="/store" method="POST" id="route-form">
+        <input style="display: none;" type="text" name="category" value="furniture">
+    </form>
+    {% elif routing_key == to_appliances %}
+    <form action="/store" method="POST" id="route-form">
+        <input style="display: none;" type="text" name="category" value="appliances">
+    </form>
+    {% elif routing_key == to_other %}
+    <form action="/store" method="POST" id="route-form">
+        <input style="display: none;" type="text" name="category" value="other">
+    </form>
+    {% elif routing_key == to_faq %}
+    <form action="/faq" method="GET" id="route-form">
+    </form>
+    {% elif routing_key == to_about %}
+    <form action="/about" method="GET" id="route-form">
+    </form>
+    {% elif routing_key == to_contact %}
+    <form action="/contact" method="GET" id="route-form">
+    </form>
+    {% elif routing_key == to_housing %}
+    <form action="/store" method="POST" id="route-form">
+        <input style="display: none;" type="text" name="category" value="housing">
+    </form>
+    {% elif routing_key == to_parking %}
+    <form action="/store" method="POST" id="route-form">
+        <input style="display: none;" type="text" name="category" value="parking">
+    </form>
+    {% elif routing_key == to_survey %}
+    <form action="/survey" method="GET" id="route-form">
+    </form>
+    {% elif routing_key == to_chat %}
+    <form action="/chat" method="GET" id="route-form">
+    </form>
+    {% elif routing_key == to_myitems %}
+    <form action="/items" method="GET" id="route-form">
+    </form>
+    {% elif routing_key == to_cart %}
+    <form action="/cart" method="GET" id="route-form">
+    </form>
+    {% elif routing_key == to_profile %}
+    <form action="/profile" method="GET" id="route-form">
+    </form>
+    {% elif routing_key == to_rec %}
+    <form action="/store" method="POST" id="route-form">
+        <input style="display: none;" type="text" name="category" value="rec">
+    </form>
+    {% else %}
+    <form action="/home" method="GET" id="route-form">
+    </form>
+    {% endif %}
+    <div class="loading-screen-active" id="loading-screen">
+        <img id="loading_image" src="/static/img/colorful_loading.gif" alt="A beautiful image">
+    </div>
+    <script>
+        window.onload = function(){
+            var form = document.getElementById("route-form");
+            form.submit();
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Create Listing</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <link rel="apple-touch-icon" href="assets/img/apple-icon.png" />
+    <link rel="shortcut icon" href="{{url_for('static', filename='img/favicon.png')}}">
+
+    <link rel="stylesheet" href="/static/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="/static/css/templatemo.css" />
+    <link rel="stylesheet" href="/static/css/custom.css" />
+    <link rel="stylesheet" href="/static/css/general.css">
+
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;200;300;400;500;700;900&display=swap" />
+    <link rel="stylesheet" href="/static/css/fontawesome.min.css" />
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+    <script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+
+</head>
+
+<body>
+    <!-- Header -->
+    <nav class="navbar navbar-expand-lg navbar-light shadow">
+        <div class="container d-flex justify-content-between align-items-center">
+          <a class="navbar-brand text-success logo h1 align-self-center" href="{{url_for('home')}}">
+            <img src="/static/img/vector/colored-isolated.svg" alt="StudentX" style="height: 50px" />
+          </a>
+    
+          <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse"
+            data-bs-target="#templatemo_main_nav" aria-controls="navbarSupportedContent" aria-expanded="false"
+            aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="" id="templatemo_main_nav">
+            <div class="navbar align-self-center d-flex">
+              <div class="d-lg-none flex-sm-fill mt-3 mb-4 col-7 col-sm-auto pr-3">
+                <!--<div class="input-group">
+                  <input type="text" class="form-control" id="inputMobileSearch" placeholder="Search ..." />
+                  <div class="input-group-text">
+                    <i class="fa fa-fw fa-search"></i>
+                  </div>
+                </div>-->
+              </div>
+              <!--<a class="nav-icon d-none d-lg-inline" href="#" data-bs-toggle="modal" data-bs-target="#templatemo_search">
+                <i class="fa fa-fw fa-search text-dark mr-2"></i>
+              </a>-->
+              <ul class="nav navbar-nav d-flex justify-content-between mx-lg-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="{{url_for('chat.chat')}}">Chat</a>
+                </li>
+              </ul>
+              &nbsp;
+              <!--<a class="nav-icon position-relative text-decoration-none" href="{{url_for('chat.chat')}}" title="chat">
+                <i class="fa fa-fw fa-message text-dark mr-3"></i>
+              </a>-->
+              <ul class="nav navbar-nav d-flex justify-content-between mx-lg-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="{{url_for('store.store')}}">Store</a>
+                </li>
+              </ul>
+              &nbsp;
+              <ul class="nav navbar-nav d-flex justify-content-between mx-lg-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="{{url_for('store.myitems')}}">Create Listing</a>
+                </li>
+              </ul>
+              &nbsp;&nbsp;&nbsp;&nbsp;
+              <!--<a class="nav-icon position-relative text-decoration-none" href="{{url_for('store.store')}}" title="store">
+                <i class="fa fa-fw fa-shop text-dark mr-3"></i>
+              </a>-->
+              <a class="nav-icon position-relative text-decoration-none" href="{{url_for('basket.basket')}}" title="cart">
+                <i class="fa fa-fw fa-cart-arrow-down text-dark mr-1"></i>
+                <span
+                  class="position-absolute top-0 left-100 translate-middle badge rounded-pill bg-light text-dark" id="cart-number">0</span>
+              </a>
+              &nbsp;&nbsp;
+              <a class="nav-icon position-relative text-decoration-none" href="{{url_for('profile.profile')}}">
+                <i class="fa fa-fw fa-user text-dark mr-3"></i>
+                <!-- notifications in the future -->
+                <!-- <span class="position-absolute top-0 left-100 translate-middle badge rounded-pill bg-light text-dark">+1</span> -->
+              </a>
+              <ul class="nav navbar-nav d-flex justify-content-between mx-lg-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="{{url_for('logout')}}">Logout</a>
+                </li>
+            </ul>
+            </div>
+          </div>
+          
+        </div>
+      </nav>
+    <!-- Close Header -->
+
+
+    <div class="container mt-5 mb-5">
+        <div class="d-flex justify-content-center row">
+            <div class="col-md-10">
+                <h2>Add A New Item</h2>
+                <form method="POST" action="/items" enctype="multipart/form-data" id="new_item_form">
+                    <div class="row p-2 bg-white border rounded"
+                        style="box-shadow: 0 0 5px 3px rgb(159 159 159 / 50%);margin-bottom: 25px;">
+                        <div class="col-md-3 mt-1">
+                            <img class="img-fluid img-responsive rounded product-image" id="productImg" src="/static/img/empty.jpg" style="overflow: hidden; object-fit: contain; max-height: 250px; min-height: 250px;">
+                            <br><br>
+                            <input id="image" type="file" onchange="previewFile()" accept="image/png, image/jpeg, image/gif" name="image" required>
+                            <!--style="display: none!important; visibility: none!important;"-->
+                            <script>
+                                function previewFile() {
+                                    var preview = document.querySelector('#productImg');
+                                    var file = document.querySelector('input[type=file]').files[0];
+                                    var reader = new FileReader();
+
+                                    reader.addEventListener("load", function () {
+                                        preview.src = reader.result;
+                                    }, false);
+
+                                    if (file) {
+                                        reader.readAsDataURL(file);
+                                    }
+                                }
+                                $(function () {
+                                    $('#productImg').on('click', function () {
+                                        $('#image').click();
+                                    });
+                                });
+                            </script>
+                        </div>
+                        <div class="col-md-6 mt-1">
+                            <h5>Enter Item Title</h5>
+                                <input type="textarea" class="form-control" name="title" value="" id="title1" maxlength="48" required style="margin-bottom: 5px;">
+                                <h5>Item Description</h5>
+                                    <textarea class="form-control" name="item-description" maxlength="300" required type="text"></textarea>
+                                    <br>
+                                <span>
+                                    <div class="mt-1 mb-1 spec-1" style="display: flex;">
+                                        <label for="category" style="margin-right: 10px;">Category:</label>
+                                        <select id="category" class="form-control" name="category" required>
+                                            <option value="" selected>select</option>
+                                            <option value="tech">Tech</option>
+                                            <option value="clothing">Clothing</option>
+                                            <option value="books">Books</option>
+                                            <option value="home_decor">Home Decor</option>
+                                            <option value="lighting">Lighting</option>
+                                            <option value="furniture">Furniture</option>
+                                            <option value="appliances">Appliances</option>
+                                            <option value="housing">Housing</option>
+                                            <option value="parking">Parking</option>
+                                            <option value="other">Other</option>
+                                        </select>
+                                    </div>
+                                </span>
+                        </div>
+                        <div class="align-items-center align-content-center col-md-3 border-left mt-1">
+                            <div class="d-flex flex-row align-items-center">
+                                <h5 class="mr-1">Price</h5>
+                            </div>
+                            <input type="number" class="form-control" name="price-add" step="0.01"
+                                oninput="limitDecimalPlaces(this, 2)" required>
+                            
+
+                            <div class="d-flex flex-column mt-4">
+                                <button class="btn btn-primary btn-sm" type="submit">
+                                    Create Listing
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="d-flex justify-content-center row">
+            <div class="col-md-10">
+                <h2>My Items</h2>
+                {% if items %}
+                {% for item_id, item in items.items() %}
+                    <form method="POST" action="/api/edit/marketplace/item/{{item_id}}/{{item.category}}">
+                    <div class="row p-2 bg-white border rounded"
+                        style="box-shadow: 0 0 5px 3px rgb(159 159 159 / 50%);margin-bottom: 25px;">
+                        <div class="col-md-3 mt-1"><img class="img-fluid img-responsive rounded product-image" style="overflow: hidden; object-fit: contain; max-height: 250px; min-height: 250px;"
+                                src={{item.image_url}}>
+                        </div>
+                        <div class="col-md-6 mt-1">
+                            <h5>Edit Item Title</h5>
+                            <input type="text" class="form-control" name="title" value="{{item.title}}" id="title2-{{item_id}}" required><br>
+                            <div class="d-flex flex-row">
+                                <!--<div class="ratings mr-2"><i class="fa fa-star"></i><i class="fa fa-star"></i><i
+                                        class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i>
+                                    </div>-->
+                            </div>
+                            <h5>Edit Item Description</h5>
+                                <textarea class="form-control" name="item-description" maxlength="300" required type="text">{{item.description}}</textarea>
+                                <br>
+                            <div class="mt-1 mb-1 spec-1">Category: <span>{{item.category}}<br></span></div>
+                        </div>
+                        <div class="align-items-center align-content-center col-md-3 border-left mt-1">
+                            <div class="d-flex flex-row align-items-center">
+                                <h5 class="mr-1">Edit Item Price</h5>
+                            </div>
+                            <input type="number" class="form-control" name="price" value="{{item.dollars}}.{{item.cents}}"
+                                id="{{item_id}}-price" oninput="limitDecimalPlaces(this, 2)" step="0.01" required><br>
+
+
+                            <div class="d-flex flex-column mt-4">
+                                    <button class="btn btn-primary btn-sm" type="submit">
+                                        Update Listing
+                                    </button>
+                                    <div class="btn btn-outline-primary btn-sm mt-2" type="submit" onclick="deleteItem(this)" id="{{item_id}}:{{item.category}}">Delete
+                                        Listing
+                                    </div>
+                                
+                            </div>
+                        </div>
+                    </div>
+                    </form>
+                    <script>
+                        function deleteItem(element){
+                            let element_id = element.id;
+                            let parts = element_id.split(":");
+                            let endpoint = `/api/delete/marketplace/item/${parts[0]}/${parts[1]}`;
+                            fetch(endpoint,{
+                                method: "POST",
+                                cache: "no-cache"
+                            }).then((response)=>{
+                                window.location.href="./items";
+                            })
+                        }
+                    </script>
+                {% endfor %}
+                {% else %}
+                <p>You have no items. Use the form below to add a new item.</p>
+                {% endif %}
+            </div>
+        </div>
+
+    </div>
+    <script>
+
+        function limitDecimalPlaces(input, decimalPlaces) {
+
+            if (input.value.toString().includes(".")) {
+                input.value = input.value.replace(/[^0-9.]/g, '');
+
+                var value = input.value;
+
+                var parts = value.split('.');
+
+                if (parts.length > 2) {
+                    input.value = parts[0] + '.' + parts.slice(1, parts.length - 1).join('');
+                }
+
+                if (parts.length > 1 && parts[1].length > decimalPlaces) {
+                    input.value = parts[0] + '.' + parts[1].slice(0, decimalPlaces);
+                }
+            }
+        }
+
+    </script>
+
+      <footer class="bg-dark" id="tempaltemo_footer">
+        <div class="container">
+            <div class="row">
+
+                <div class="col-md-4 pt-5">
+                    <h2 class="h2 text-success border-bottom pb-3 border-light logo">StudentX</h2>
+                    <ul class="list-unstyled text-light footer-link-list">
+                        <li>
+                            <i class="fas fa-map-marker-alt fa-fw"></i>
+                            5 Seminary Place, New Brunswick, 08901, NJ
+                        </li>
+
+                        <li>
+                            <i class="fa fa-envelope fa-fw"></i>
+                            <a class="text-decoration-none" href="mailto:info@company.com">studentx.capstone@gmail.com</a>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="col-md-4 pt-5">
+                    <h2 class="h2 text-light border-bottom pb-3 border-light">Categories</h2>
+                    <form id="category-footer-form" action="/store" method="POST">
+                      <input style="display: none;" type="text" name="category" id="sup-data" value="">
+                      <ul class="list-unstyled text-light footer-link-list">
+                        <li><div class="text-decoration-none form" onclick="submitForm('')">All</div></li>
+                        <li><div class="text-decoration-none form" onclick="submitForm('tech')">Tech</div></li>
+                        <li><div class="text-decoration-none form" onclick="submitForm('clothing')">Clothing</div></li>
+                        <li><div class="text-decoration-none form" onclick="submitForm('books')">Books</div></li>
+                        <li><div class="text-decoration-none form" onclick="submitForm('home_decor')">Home Decor</div></li>
+                        <li><div class="text-decoration-none form" onclick="submitForm('lighting')">Lighting</div></li>
+                        <li><div class="text-decoration-none form" onclick="submitForm('furniture')">Furniture</div></li>
+                        <li><div class="text-decoration-none form" onclick="submitForm('appliances')">Appliances</div></li>
+                        <li><div class="text-decoration-none form" onclick="submitForm('housing')">Housing</div></li>
+                        <li><div class="text-decoration-none form" onclick="submitForm('parking')">Parking</div></li>
+                        <li><div class="text-decoration-none form" onclick="submitForm('other')">Other</div></li>
+                    </ul>
+                    </form>
+                </div>
+
+                <div class="col-md-4 pt-5">
+                    <h2 class="h2 text-light border-bottom pb-3 border-light">Further Info</h2>
+                    <ul class="list-unstyled text-light footer-link-list">
+                        <li><a class="text-decoration-none" href="{{url_for('home')}}">Home</a></li>
+                        <li><a class="text-decoration-none" href="{{url_for('about')}}">About Us</a></li>
+                        <li><a class="text-decoration-none" href="{{url_for('faq.faq')}}">FAQs</a></li>
+                        <li><a class="text-decoration-none" href="{{url_for('contact_us.contact')}}">Contact Us</a></li>
+                    </ul>
+                </div>
+
+            </div>
+
+            <div class="row text-light">
+                <div class="col-12 mb-3">
+                    <div class="w-100 my-3 border-top border-light"></div>
+                </div>
+                <div class="col-auto me-auto">
+                    <ul class="list-inline text-left footer-icons">
+                        <li class="list-inline-item border border-light rounded-circle text-center">
+                            <a class="text-light text-decoration-none" target="_blank" href="http://facebook.com/"><i
+                                    class="fab fa-facebook-f fa-lg fa-fw"></i></a>
+                        </li>
+                        <li class="list-inline-item border border-light rounded-circle text-center">
+                            <a class="text-light text-decoration-none" target="_blank"
+                                href="https://www.instagram.com/"><i class="fab fa-instagram fa-lg fa-fw"></i></a>
+                        </li>
+                        <li class="list-inline-item border border-light rounded-circle text-center">
+                            <a class="text-light text-decoration-none" target="_blank" href="https://twitter.com/"><i
+                                    class="fab fa-twitter fa-lg fa-fw"></i></a>
+                        </li>
+                        <li class="list-inline-item border border-light rounded-circle text-center">
+                            <a class="text-light text-decoration-none" target="_blank"
+                                href="https://www.linkedin.com/"><i class="fab fa-linkedin fa-lg fa-fw"></i></a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="col-auto">
+                    <label class="sr-only" for="subscribeEmail">Email address</label>
+                    <div class="input-group mb-2">
+                        <input type="email" class="form-control bg-dark border-light" id="subscribeEmail"
+                            placeholder="Email address">
+                        <div class="input-group-text btn-success text-light" id="subscribe-btn">Subscribe</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </footer>
+
+
+    <script src="/static/js/jquery-1.11.0.min.js"></script>
+    <script src="/static/js/jquery-migrate-1.2.1.min.js"></script>
+    <script src="/static/js/bootstrap.bundle.min.js"></script>
+    <script src="/static/js/templatemo.js"></script>
+    <script src="/static/js/custom.js"></script>
+    <script src="/static/js/index.js"></script>
+    <script src="/static/js/basket.js"></script>
+    <script>
+        document.getElementById("new_item_form").onsubmit = function() {
+            var category = document.getElementById("category").value;
+            if (category === "") {
+                alert("Please select a category.");
+                return false; // Prevent form submission
+            }
+        };
+    </script>
+</body>
+
+
+</html>

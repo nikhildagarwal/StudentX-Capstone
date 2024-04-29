@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Profile</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <link rel="apple-touch-icon" href="assets/img/apple-icon.png" />
+    <link rel="shortcut icon" href="{{url_for('static', filename='img/favicon.png')}}">
+
+    <link rel="stylesheet" href="/static/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="/static/css/templatemo.css" />
+    <link rel="stylesheet" href="/static/css/custom.css" />
+    <link rel="stylesheet" href="/static/css/general.css">
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;200;300;400;500;700;900&display=swap" />
+    <link rel="stylesheet" href="/static/css/fontawesome.min.css" />
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+    <script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
+</head>
+
+<body style="    background: #f5f6fa;
+">
+    <!-- Header -->
+    <nav class="navbar navbar-expand-lg navbar-light shadow" style="background-color: #ffffff;">
+        <div class="container d-flex justify-content-between align-items-center">
+          <a class="navbar-brand text-success logo h1 align-self-center" href="{{url_for('home')}}">
+            <img src="/static/img/vector/colored-isolated.svg" alt="StudentX" style="height: 50px" />
+          </a>
+    
+          <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse"
+            data-bs-target="#templatemo_main_nav" aria-controls="navbarSupportedContent" aria-expanded="false"
+            aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="" id="templatemo_main_nav">
+            <div class="navbar align-self-center d-flex">
+              <div class="d-lg-none flex-sm-fill mt-3 mb-4 col-7 col-sm-auto pr-3">
+                <!--<div class="input-group">
+                  <input type="text" class="form-control" id="inputMobileSearch" placeholder="Search ..." />
+                  <div class="input-group-text">
+                    <i class="fa fa-fw fa-search"></i>
+                  </div>
+                </div>-->
+              </div>
+              <!--<a class="nav-icon d-none d-lg-inline" href="#" data-bs-toggle="modal" data-bs-target="#templatemo_search">
+                <i class="fa fa-fw fa-search text-dark mr-2"></i>
+              </a>-->
+              <ul class="nav navbar-nav d-flex justify-content-between mx-lg-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="{{url_for('chat.chat')}}">Chat</a>
+                </li>
+              </ul>
+              &nbsp;
+              <!--<a class="nav-icon position-relative text-decoration-none" href="{{url_for('chat.chat')}}" title="chat">
+                <i class="fa fa-fw fa-message text-dark mr-3"></i>
+              </a>-->
+              <ul class="nav navbar-nav d-flex justify-content-between mx-lg-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="{{url_for('store.store')}}">Store</a>
+                </li>
+              </ul>
+              &nbsp;
+              <ul class="nav navbar-nav d-flex justify-content-between mx-lg-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="{{url_for('store.myitems')}}">Create Listing</a>
+                </li>
+              </ul>
+              &nbsp;&nbsp;&nbsp;&nbsp;
+              <!--<a class="nav-icon position-relative text-decoration-none" href="{{url_for('store.store')}}" title="store">
+                <i class="fa fa-fw fa-shop text-dark mr-3"></i>
+              </a>-->
+              <a class="nav-icon position-relative text-decoration-none" href="{{url_for('basket.basket')}}" title="cart">
+                <i class="fa fa-fw fa-cart-arrow-down text-dark mr-1"></i>
+                <span
+                  class="position-absolute top-0 left-100 translate-middle badge rounded-pill bg-light text-dark" id="cart-number">0</span>
+              </a>
+              &nbsp;&nbsp;
+              <a class="nav-icon position-relative text-decoration-none" href="{{url_for('profile.profile')}}">
+                <i class="fa fa-fw fa-user text-dark mr-3"></i>
+                <!-- notifications in the future -->
+                <!-- <span class="position-absolute top-0 left-100 translate-middle badge rounded-pill bg-light text-dark">+1</span> -->
+              </a>
+              <ul class="nav navbar-nav d-flex justify-content-between mx-lg-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="{{url_for('logout')}}">Logout</a>
+                </li>
+            </ul>
+            </div>
+          </div>
+          
+        </div>
+      </nav>
+
+
+    <div class='account-body'>
+        <!-- Close Header -->
+        <div class="container">
+            <div class="row gutters">
+                <div class="col-xl-3 col-lg-3 col-md-12 col-sm-12 col-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="account-settings">
+                                <div class="user-profile">
+                                    <form method="POST">
+                                        <div class="user-avatar">
+                                            <img src="{{PROFILE_PICTURE}}" alt="Profile Picture" id="profileImg">
+                                            <input id="profile-image-upload"
+                                                style="display: none!important; visibility: none!important;" type="file"
+                                                onchange="previewFile()" name="image">
+                                        </div>
+                                        <h5 class="user-name">Name: {{FIRST_NAME}} {{LAST_NAME}}</h5>
+                                        <h6 class="user-email">Email: {{EMAIL}}<br></h6>
+                                        <br>
+                                        <div style="display: flex; justify-content: center;">
+                                            <button type="button" id="submit" name="submit" value="submit"
+                                                class="btn btn-primary btn-success" onclick="savepfp()">Save</button>
+                                        </div>
+                                </div>
+                                <script>
+                                    function previewFile() {
+                                        var preview = document.querySelector('#profileImg');
+                                        var file = document.querySelector('input[type=file]').files[0];
+                                        var reader = new FileReader();
+
+                                        reader.addEventListener("load", function () {
+                                            preview.src = reader.result;
+                                        }, false);
+
+                                        if (file) {
+                                            reader.readAsDataURL(file);
+                                        }
+                                    }
+                                    $(function () {
+                                        $('#profileImg').on('click', function () {
+                                            $('#profile-image-upload').click();
+                                        });
+                                    });
+                                    async function savepfp() {
+                                        const url = '/profile';
+                                        const formData = new FormData();
+                                        formData.append('image', document.querySelector('input[type=file]').files[0]);
+                                        await fetch(url, {
+                                            method: 'POST',
+                                            encoding: 'multipart/form-data',
+                                            body: formData,
+                                        });
+
+                                        // window.location.href = "/profile";
+                                    }
+
+                                </script>
+
+                                <!-- <div class="about">
+                                    <h5>maybe an about sectrion later on?</h5>
+                                    <p>This is for our capstone project?</p>
+                                </div> -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-9 col-lg-9 col-md-12 col-sm-12 col-12">
+                    <div class="card h-95">
+                        <div class="card-body">
+                            <div class="row gutters">
+                                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                                    <h6 class="mb-2 text-primary">Personal Details</h6>
+                                </div>
+                                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                                    <div class="form-group">
+                                        <label for="fullName">First Name</label>
+                                        <input type="text" class="form-control" id="firstName" name="first_name"
+                                            placeholder="Enter First Name">
+                                    </div>
+                                </div>
+                                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                                    <div class="form-group">
+                                        <label for="last_name">Last Name</label>
+                                        <input type="text" class="form-control" id="lastName" name="last_name"
+                                            placeholder="Enter Last Name">
+                                    </div>
+                                </div>
+                            </div>
+                            <br>
+                            <div class="row gutters">
+                                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                                    <form class="" method="POST" id="updatePersonalDetailForm">
+
+                                        <div class="text-right">
+                                            <button type="button" id="submit" name="submit" value="submit"
+                                                class="btn btn-primary btn-success"
+                                                onclick="submitFunc()">Update</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                            <script>
+                                async function submitFunc() {
+                                    if (document.getElementById("firstName").value != "") {
+                                        const url = '/profile/edit/first/name';
+                                        const formData = new FormData();
+
+                                        if (document.getElementById("firstName").value != "") {
+                                            formData.append('first_name', document.getElementById("firstName").value);
+
+                                            await fetch(url, {
+                                                method: 'POST',
+                                                body: formData,
+                                            });
+                                        }
+                                    }
+                                    if (document.getElementById("lastName").value != "") {
+                                        const url = '/profile/edit/last/name';
+                                        const formData = new FormData();
+
+                                        if (document.getElementById("lastName").value != "") {
+                                            formData.append('last_name', document.getElementById("lastName").value);
+
+                                            await fetch(url, {
+                                                method: 'POST',
+                                                body: formData,
+                                            });
+                                        }
+                                    }
+                                    window.location.href = "/profile";
+
+                                }
+
+                            </script>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        {% if sf == False %}
+        <div class="container" style="padding-bottom:100px">
+            <div class="row gutters">
+                <div class="col-xl-3 col-lg-3 col-md-12 col-sm-12 col-12">
+                    <div class="card">
+                    </div>
+                </div>
+                <div class="col-xl-9 col-lg-9 col-md-12 col-sm-12 col-12">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <div class="row gutters">
+                                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                                    <h6 class="mb-2 text-primary">Fill out our survey!</h6>
+                                </div>
+                            </div>
+                            <br>
+                            <div class="row gutters">
+                                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                                    <form class="" method="GET" action="/survey/rxDvzI12JKa2gTCmAVM6vv2OvQ4wbkPU">
+
+                                        <div class="text-right">
+                                            <button type="submit"
+                                                class="btn btn-primary btn-success">Let's Go</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% else %}
+        <div class="container" style="padding-bottom:100px">
+            <div class="row gutters">
+                <div class="col-xl-3 col-lg-3 col-md-12 col-sm-12 col-12">
+                    <div class="card">
+                    </div>
+                </div>
+                <div class="col-xl-9 col-lg-9 col-md-12 col-sm-12 col-12">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <div class="row gutters">
+                                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                                    <h6 class="mb-2 text-primary">Thanks for completing our survey!</h6>
+                                    <h6 class="user-email" style="font-size: small;">Here are your selected responses.<br></h6>
+                                </div>
+                            </div>
+                            <br>
+                            {% for label, answer in data.items() %}
+                            <div style="color: black; font-size: small;">{{label}} &nbsp;&nbsp; <span style="color: #7e7e7e;">{{answer}}</span></div>
+                            {% endfor %}
+                            <br>
+                            <div class="row gutters">
+                                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                                    <form class="" method="GET" action="/survey/rxDvzI12JKa2gTCmAVM6vv2OvQ4wbkPU">
+
+                                        <div class="text-right">
+                                            <button type="submit"
+                                                class="btn btn-primary btn-success">Retake</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+        
+
+    </div>
+
+    
+     <footer class="bg-dark" id="tempaltemo_footer">
+        <div class="container">
+            <div class="row">
+
+                <div class="col-md-4 pt-5">
+                    <h2 class="h2 text-success border-bottom pb-3 border-light logo">StudentX</h2>
+                    <ul class="list-unstyled text-light footer-link-list">
+                        <li>
+                            <i class="fas fa-map-marker-alt fa-fw"></i>
+                            5 Seminary Place, New Brunswick, 08901, NJ
+                        </li>
+
+                        <li>
+                            <i class="fa fa-envelope fa-fw"></i>
+                            <a class="text-decoration-none" href="mailto:info@company.com">studentx.capstone@gmail.com</a>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="col-md-4 pt-5">
+                    <h2 class="h2 text-light border-bottom pb-3 border-light">Categories</h2>
+                    <form id="category-footer-form" action="/store" method="POST">
+                      <input style="display: none;" type="text" name="category" id="sup-data" value="">
+                      <ul class="list-unstyled text-light footer-link-list">
+                        <li><div class="text-decoration-none form" onclick="submitForm('')">All</div></li>
+                        <li><div class="text-decoration-none form" onclick="submitForm('tech')">Tech</div></li>
+                        <li><div class="text-decoration-none form" onclick="submitForm('clothing')">Clothing</div></li>
+                        <li><div class="text-decoration-none form" onclick="submitForm('books')">Books</div></li>
+                        <li><div class="text-decoration-none form" onclick="submitForm('home_decor')">Home Decor</div></li>
+                        <li><div class="text-decoration-none form" onclick="submitForm('lighting')">Lighting</div></li>
+                        <li><div class="text-decoration-none form" onclick="submitForm('furniture')">Furniture</div></li>
+                        <li><div class="text-decoration-none form" onclick="submitForm('appliances')">Appliances</div></li>
+                        <li><div class="text-decoration-none form" onclick="submitForm('housing')">Housing</div></li>
+                        <li><div class="text-decoration-none form" onclick="submitForm('parking')">Parking</div></li>
+                        <li><div class="text-decoration-none form" onclick="submitForm('other')">Other</div></li>
+                    </ul>
+                    </form>
+                </div>
+
+                <div class="col-md-4 pt-5">
+                    <h2 class="h2 text-light border-bottom pb-3 border-light">Further Info</h2>
+                    <ul class="list-unstyled text-light footer-link-list">
+                        <li><a class="text-decoration-none" href="{{url_for('home')}}">Home</a></li>
+                        <li><a class="text-decoration-none" href="{{url_for('about')}}">About Us</a></li>
+                        <li><a class="text-decoration-none" href="{{url_for('faq.faq')}}">FAQs</a></li>
+                        <li><a class="text-decoration-none" href="{{url_for('contact_us.contact')}}">Contact Us</a></li>
+                    </ul>
+                </div>
+
+            </div>
+
+            <div class="row text-light">
+                <div class="col-12 mb-3">
+                    <div class="w-100 my-3 border-top border-light"></div>
+                </div>
+                <div class="col-auto me-auto">
+                    <ul class="list-inline text-left footer-icons">
+                        <li class="list-inline-item border border-light rounded-circle text-center">
+                            <a class="text-light text-decoration-none" target="_blank" href="http://facebook.com/"><i
+                                    class="fab fa-facebook-f fa-lg fa-fw"></i></a>
+                        </li>
+                        <li class="list-inline-item border border-light rounded-circle text-center">
+                            <a class="text-light text-decoration-none" target="_blank"
+                                href="https://www.instagram.com/"><i class="fab fa-instagram fa-lg fa-fw"></i></a>
+                        </li>
+                        <li class="list-inline-item border border-light rounded-circle text-center">
+                            <a class="text-light text-decoration-none" target="_blank" href="https://twitter.com/"><i
+                                    class="fab fa-twitter fa-lg fa-fw"></i></a>
+                        </li>
+                        <li class="list-inline-item border border-light rounded-circle text-center">
+                            <a class="text-light text-decoration-none" target="_blank"
+                                href="https://www.linkedin.com/"><i class="fab fa-linkedin fa-lg fa-fw"></i></a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="col-auto">
+                    <label class="sr-only" for="subscribeEmail">Email address</label>
+                    <div class="input-group mb-2">
+                        <input type="email" class="form-control bg-dark border-light" id="subscribeEmail"
+                            placeholder="Email address">
+                        <div class="input-group-text btn-success text-light" id="subscribe-btn">Subscribe</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </footer>
+    <div class="loading-screen-active" id="loading-screen">
+        <img id="loading_image" src="/static/img/colorful_loading.gif" alt="A beautiful image">
+      </div>
+    <!-- Start Script -->
+    <script src="/static//js/jquery-1.11.0.min.js"></script>
+    <script src="/static/js/jquery-migrate-1.2.1.min.js"></script>
+    <script src="/static/js/bootstrap.bundle.min.js"></script>
+    <script src="/static/js/templatemo.js"></script>
+    <script src="/static/js/index.js"></script>
+    <script>
+        window.onload = function(){
+            let cart_quant_ref = document.getElementById("cart-number");
+            fetch(`/api/check/cart/quantity`,{
+                method:"GET",
+                cache:"no-cache"
+            }).then((response)=>{
+                response.text().then((quantity)=>{
+                    cart_quant_ref.innerHTML = quantity;
+                    loading_screen_off();
+                })
+            })
+        }
+
+        function submitForm(name){
+    document.getElementById("sup-data").value = String(name);
+    var form = document.getElementById("category-footer-form");
+    form.submit();
+}
+
+        function loading_screen_on(){
+            document.getElementById("loading-screen").className = "loading-screen-active";
+        }
+
+        function loading_screen_off(){
+            document.getElementById("loading-screen").className = "loading-screen";
+        }
+    </script>
+    <!-- End Script -->
+    
+</body>
+
+</html>

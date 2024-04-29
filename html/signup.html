@@ -1,0 +1,101 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Signup</title>
+
+    <link rel="shortcut icon" href="{{url_for('static', filename='img/favicon.png')}}">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
+    <link rel="stylesheet" href="{{url_for('static', filename='css/style.css')}}">
+</head>
+
+<body>
+
+    <div class="site-wrap d-md-flex align-items-stretch">
+        <div class="bg-img" id="nikhiltest" style="background-image: url('/static/img/rwh.jpg')"></div>
+        <div class="form-wrap">
+            <div class="form-inner">
+                <h1 class="title">Sign up</h1>
+                <p class="caption mb-4">Create your account in seconds.</p>
+
+                <form class="" method="POST" action="/signup">
+
+                    <div class="form-floating">
+                        <input type="text" value="{{FIRST_NAME}}" class="form-control" placeholder="First Name"
+                            name="first_name" required>
+                        <label for="name">First Name</label>
+
+                    </div>
+                    <div class="form-floating">
+                        <input type="text" value="{{LAST_NAME}}" class="form-control" placeholder="Last Name"
+                            name="last_name" required>
+                        <label for="name">Last Name</label>
+
+                    </div>
+
+                    <div class="form-floating">
+                        <input type="email" value="{{EMAIL}}" class="form-control" id="email"
+                            placeholder="example@studentx.com" name="email" required>
+                        <label for="email">Email Address</label>
+                    </div>
+
+                    <div class="form-floating">
+                        <span class="password-show-toggle js-password-show-toggle"><span class="uil"></span></span>
+                        <input type="password" value="{{PASSWORD1}}" class="form-control" id="password1"
+                            name="password1" maxlength="15" placeholder="Password">
+                        <label for="password">Password</label>
+                    </div>
+                    <div class="form-floating">
+                        <span class="password-show-toggle js-password-show-toggle"><span class="uil"></span></span>
+                        <input type="password" value="{{PASSWORD2}}" class="form-control" id="password2"
+                            name="password2" maxlength="15" placeholder="Password">
+                        <label for="password">Confirm Password</label>
+                    </div>
+
+                    <div class="d-flex justify-content-between">
+                        <div class="form-check">
+                            <input type="checkbox" class="form-check-input" id="terms" name="terms">
+                            <label for="remember" class="form-check-label">I agree to the <a href="#">Terms of
+                                    Service</a> and <a href="#">Privacy Policy</a></label>
+                        </div>
+                    </div>
+
+                    <div class="d-grid mb-4">
+                        <button type="submit" class="btn btn-primary" id="submit-btn">Create an account</button>
+                    </div>
+                    <span>
+                        <p class="errorMessage" id="inner-error-box">{{error_message}}</p>
+                    </span>
+
+                    <div class="mb-2">Already a member? <a href="{{url_for('login')}}" id="'login">Log in</a></div>
+
+                    <!-- <div class="social-account-wrap">
+                        <h4 class="mb-4"><span>or continue with</span></h4>
+                        <ul class="list-unstyled social-account d-flex justify-content-between">
+                            <li><a href="#"><img src="/static/img/icon-google.svg" alt="Google logo"></a></li>
+                            <li><a href="#"><img src="images/icon-facebook.svg" alt="Facebook logo"></a></li>
+                            <li><a href="#"><img src="images/icon-apple.svg" alt="Apple logo"></a></li>
+                            <li><a href="#"><img src="images/icon-twitter.svg" alt="Twitter logo"></a></li>
+                        </ul>
+                    </div> -->
+
+                </form>
+            </div>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+        crossorigin="anonymous"></script>
+    <script src="{{url_for('static', filename='js/custom.js')}}"></script>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,34 @@
+.loading-screen-active{
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100vw;
+    height: 100vh;
+    
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(2.5px);
+    
+    background-color: rgba(255, 255, 255, 0.082);
+    
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    z-index: 999;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.loading-screen{
+    display: none;
+}
+
+#loading_image{
+    transform: scale(0.175);
+}
+
+.text-decoration-none.form:hover{
+    color:#59ab6e;
+    cursor: pointer;
+}

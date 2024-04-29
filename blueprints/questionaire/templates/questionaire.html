@@ -1,0 +1,173 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Survey</title>
+
+    <link rel="shortcut icon" href="{{url_for('static', filename='img/favicon.png')}}">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
+    <link rel="stylesheet" href="{{url_for('static', filename='css/style.css')}}">
+</head>
+
+<body>
+
+    <div class="site-wrap d-md-flex align-items-stretch">
+        <div class="bg-img" id="nikhiltest" style="background-image: url('/static/img/yard.jpg')"></div>
+        <div class="form-wrap">
+            <div class="form-inner">
+                <h1 class="title">Survey</h1>
+                <p class="caption mb-4">These questions will help us recommend the best items for you!<br>
+                    You can change these answers at anytime on your profile page.<br>
+                Your responses are confidential and will not be displayed on our platform.</p>
+
+                {% if routing_key %}
+                <form class="" method="POST" action="/survey/{{routing_key}}">
+                {% else %}
+                <form class="" method="POST" action="/survey">
+                {% endif %}
+                    <h1 style="color: rgb(37, 37, 37); font-size: medium;">Are you a full-time of part-time Rutgers student?<span style="color: rgb(207, 18, 18);">&nbsp;*</span></h1>
+                    <div class="form-floating">
+                        <div class="form-check">
+                            <input type="radio" class="form-check-input" id="full-time" name="employment_status" value="1" required>
+                            <label class="form-check-label" for="full-time">Full-time</label><br>
+                            <input type="radio" class="form-check-input" id="part-time" name="employment_status" value="0">
+                            <label class="form-check-label" for="part-time">Part-time</label>
+                        </div>
+                    </div>
+
+                    <h1 style="color: rgb(37, 37, 37); font-size: medium;">What is your housing status?<span style="color: rgb(207, 18, 18);">&nbsp;*</span></h1>
+                    <div class="form-floating">
+                        <div class="form-check">
+                            <input type="radio" class="form-check-input" id="busch" name="housing" value="-1:0" required>
+                            <label class="form-check-label" for="busch">Busch</label><br>
+                            <input type="radio" class="form-check-input" id="college_ave" name="housing" value="-0.5:-1" >
+                            <label class="form-check-label" for="college_ave">College Avenue</label><br>
+                            <input type="radio" class="form-check-input" id="livi" name="housing" value="0:0" >
+                            <label class="form-check-label" for="livi">Livingston</label><br>
+                            <input type="radio" class="form-check-input" id="cook" name="housing" value="1:-2.5" >
+                            <label class="form-check-label" for="cook">Cook</label><br>
+                            <input type="radio" class="form-check-input" id="doug" name="housing" value="0.5:-2.25" >
+                            <label class="form-check-label" for="doug">Douglas</label><br>
+                            <input type="radio" class="form-check-input" id="off_college_ave" name="housing" value="-0.75:-1.25" >
+                            <label class="form-check-label" for="off_college_ave">Off Campus - College Avenue</label><br>
+                            <input type="radio" class="form-check-input" id="off_other" name="housing" value="0.5:-1" >
+                            <label class="form-check-label" for="off_other">Off Campus - Other</label><br>
+                            <input type="radio" class="form-check-input" id="commuter" name="housing" value="-1:0.01" >
+                            <label class="form-check-label" for="commuter">Commuter</label><br>
+                            <input type="radio" class="form-check-input" id="other" name="housing" value="-1:0.02" >
+                            <label class="form-check-label" for="other">Other</label><br>
+                        </div>
+                    </div>
+
+                    <h1 style="color: rgb(37, 37, 37); font-size: medium;">What is your academic year level?<span style="color: rgb(207, 18, 18);">&nbsp;*</span></h1>
+                    <div class="form-floating">
+                        <div class="form-check">
+                            <input type="radio" class="form-check-input" id="freshman" name="year_level" value="0" required>
+                            <label class="form-check-label" for="freshman">Freshman</label><br>
+                            <input type="radio" class="form-check-input" id="sophomore" name="year_level" value="1" required>
+                            <label class="form-check-label" for="sophomore">Sophomore</label><br>
+                            <input type="radio" class="form-check-input" id="junior" name="year_level" value="2" required>
+                            <label class="form-check-label" for="junior">Junior</label><br>
+                            <input type="radio" class="form-check-input" id="senior" name="year_level" value="3" required>
+                            <label class="form-check-label" for="senior">Senior</label><br>
+                            <input type="radio" class="form-check-input" id="masters" name="year_level" value="4" required>
+                            <label class="form-check-label" for="masters">Masters</label><br>
+                            <input type="radio" class="form-check-input" id="phd" name="year_level" value="5" required>
+                            <label class="form-check-label" for="phd">PhD</label><br>
+                            <input type="radio" class="form-check-input" id="other" name="year_level" value="6" required>
+                            <label class="form-check-label" for="other">Other</label><br>
+                        </div>
+                    </div>
+
+                    <h1 style="color: rgb(37, 37, 37); font-size: medium;">What school is your major in?<span style="color: rgb(207, 18, 18);">&nbsp;*</span></h1>
+                    <div class="form-floating">
+                        <div class="form-check">
+                            <input type="radio" class="form-check-input" id="sas" name="school" value="0" required>
+                            <label class="form-check-label" for="sas">School of Arts and Sciences</label><br>
+                            <input type="radio" class="form-check-input" id="soe" name="school" value="1" required>
+                            <label class="form-check-label" for="soe">School of Engineering</label><br>
+                            <input type="radio" class="form-check-input" id="rbs" name="school" value="2" required>
+                            <label class="form-check-label" for="rbs">Rutgers Business School</label><br>
+                            <input type="radio" class="form-check-input" id="mg" name="school" value="3" required>
+                            <label class="form-check-label" for="mg">Mason Gross School of the Arts</label><br>
+                            <input type="radio" class="form-check-input" id="sebs" name="school" value="4" required>
+                            <label class="form-check-label" for="sebs">School of Environmental and Biological Sciences</label><br>
+                            <input type="radio" class="form-check-input" id="pharm" name="school" value="5" required>
+                            <label class="form-check-label" for="pharm">Ernest Mario School of Pharmacy</label><br>
+                            <input type="radio" class="form-check-input" id="sci" name="school" value="6" required>
+                            <label class="form-check-label" for="sci">School of Communication and Information</label><br>
+                            <input type="radio" class="form-check-input" id="sw" name="school" value="7" required>
+                            <label class="form-check-label" for="sw">School of Social Work</label><br>
+                            <input type="radio" class="form-check-input" id="malr" name="school" value="8" required>
+                            <label class="form-check-label" for="malr">School of Management and Labor Relations</label><br>
+                            <input type="radio" class="form-check-input" id="other" name="school" value="9" required>
+                            <label class="form-check-label" for="other">Other</label><br>
+                        </div>
+                    </div>
+
+                    <h1 style="color: rgb(37, 37, 37); font-size: medium;">Do you drive on campus?<span style="color: rgb(207, 18, 18);">&nbsp;*</span></h1>
+                    <div class="form-floating">
+                        <div class="form-check">
+                            <input type="radio" class="form-check-input" id="yes" name="drive" value="0" required>
+                            <label class="form-check-label" for="yes">Yes</label><br>
+                            <input type="radio" class="form-check-input" id="no" name="drive" value="1">
+                            <label class="form-check-label" for="no">No</label>
+                        </div>
+                    </div>
+
+                    <h1 style="color: rgb(37, 37, 37); font-size: medium;">What categories of listings are you most interested in?<span style="color: rgb(207, 18, 18);">&nbsp;*</span><br><span style="font-size: small; color: rgb(57, 57, 57);">You may select multiple answers.</span></h1>
+                    <div class="form-floating">
+                        <div class="form-check">
+                            <input type="checkbox" class="form-check-input" id="tech" name="c0" value="1">
+                            <label for="tech" class="form-check-label">Technology</label><br>
+                            <input type="checkbox" class="form-check-input" id="books" name="c1" value="1">
+                            <label for="books" class="form-check-label">Books</label><br>
+                            <input type="checkbox" class="form-check-input" id="housing" name="c2" value="1">
+                            <label for="housing" class="form-check-label">Housing</label><br>
+                            <input type="checkbox" class="form-check-input" id="parking" name="c3" value="1">
+                            <label for="parking" class="form-check-label">Parking</label><br>
+                            <input type="checkbox" class="form-check-input" id="furniture" name="c4" value="1">
+                            <label for="furniture" class="form-check-label">Furniture</label><br>
+                            <input type="checkbox" class="form-check-input" id="appliances" name="c5" value="1">
+                            <label for="appliances" class="form-check-label">Appliances</label><br>
+                            <input type="checkbox" class="form-check-input" id="home_decor" name="c6" value="1">
+                            <label for="home_decor" class="form-check-label">Home Decoration</label><br>
+                            <input type="checkbox" class="form-check-input" id="lighting" name="c7" value="1">
+                            <label for="lighting" class="form-check-label">Lighting</label><br>
+                            <input type="checkbox" class="form-check-input" id="clothing" name="c8" value="1">
+                            <label for="clothing" class="form-check-label">Clothing</label><br>
+                            <input type="checkbox" class="form-check-input" id="other" name="c9" value="1">
+                            <label for="other" class="form-check-label">Miscellaneous</label><br>
+                        </div>
+                    </div><br>
+
+                    <div class="d-grid mb-4">
+                        <button type="submit" class="btn btn-primary" id="submit-btn">Submit</button>
+                    </div>
+                    <span>
+                        <p class="errorMessage" id="inner-error-box">{{error_message}}</p>
+                    </span>
+                    <br><br><br>
+                    
+
+
+                </form>
+            </div>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+        crossorigin="anonymous"></script>
+    <script src="{{url_for('static', filename='js/custom.js')}}"></script>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js"></script>
+</body>
+
+</html>
